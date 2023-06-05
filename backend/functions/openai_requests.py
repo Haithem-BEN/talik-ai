@@ -18,7 +18,7 @@ def convert_audio_to_text(audio_file):
         message_text = transcript["text"]
         return message_text
     except Exception as e:
-        print(e)
+        print('catt',e)
         return
     
 
@@ -37,5 +37,5 @@ def get_chat_response(message_input):
         message_text = response["choices"][0]["message"]["content"]
         return message_text
     except Exception as e:
-        print(e)
+        print('gcr',e)
         return

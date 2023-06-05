@@ -20,8 +20,9 @@ app = FastAPI()
 
 # CORS - Origins
 origins = [
+    "http://127.0.0.1",
     "http://127.0.0.1:3000",
-    "http://192.168.1.106:3000/",
+    "http://127.0.0.1:8000",
     "http://192.168.1.106",
     "http://192.168.1.106:3000",
     "*",
@@ -53,16 +54,16 @@ async def check_health():
 
 
 # post bot response
-@app.post("/post-audio/")
+@app.post("/post-audio")
 async def post_audio(file: UploadFile=File(...)):
 
-    # # Get saved audio 
-    # audio_input = open("voice.mp3", "rb")
+    # Get saved audio 
+    audio_input = open("voice.mp3", "rb")
 
-    # Save file from frontend
-    with open(file.filename, "wb") as buffer:
-        buffer.write(file.file.read())
-    audio_input = open(file.filename, "rb")
+    # # Save file from frontend
+    # with open(file.filename, "wb") as buffer:
+    #     buffer.write(file.file.read())
+    # audio_input = open(file.filename, "rb")
 
     # Decode Audio 
     message_decoded = convert_audio_to_text(audio_input)
@@ -79,7 +80,6 @@ async def post_audio(file: UploadFile=File(...)):
     if not chat_response:
         return HTTPException(status_code=400, detail="failed to get chat response")
     
-
     # Store messages
     store_messages(message_decoded, chat_response)
 
