@@ -9,7 +9,7 @@ import openai
 
 
 # Custom Functions IMports
-from functions.openai_requests import convert_audio_to_text
+from functions.openai_requests import convert_audio_to_text, get_chat_response
 
 
 # Initiate APP
@@ -38,14 +38,23 @@ async def check_health():
     return {"message": "healthy"}
 
 
-# Post bot response
-@app.get("/post-audio/")
-async def post_audio():
+# get bot response
+@app.get("/get-audio/")
+async def get_audio():
+
+    # Get saved audio 
     audio_input = open("voice.mp3", "rb")
 
     # Decode Audio 
     message_decoded = convert_audio_to_text(audio_input)
+
+    # Guard: Ensure message decoded
+    if not message_decoded:
+        return HTTPException(status_code=400, detail="failed to decode audio")
     
-    print(message_decoded)
+    # Get ChatGPT Response
+    chat_response = get_chat_response(message_decoded)
+    
+    print(chat_response)
 
     return "Done"
