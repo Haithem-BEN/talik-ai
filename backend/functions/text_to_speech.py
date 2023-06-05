@@ -9,7 +9,6 @@ ELEVEN_LABS_API_KEY = config("ELEVEN_LABS_API_KEY")
 def conver_text_to_speech(message):
 
     voice_id = "xBCXR3YDVAxxCtuQHOAe"
-
     # API Request
     body = {
         "text": message,
