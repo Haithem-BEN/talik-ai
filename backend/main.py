@@ -20,12 +20,16 @@ app = FastAPI()
 
 # CORS - Origins
 origins = [
+<<<<<<< HEAD
     "http://127.0.0.1",
     "http://127.0.0.1:3000",
     "http://127.0.0.1:8000",
     "http://192.168.1.106",
     "http://192.168.1.106:3000",
     "*",
+=======
+    "http://127.0.0.1:3000"
+>>>>>>> parent of 4a3faa8 (done)
 ]
 
 
@@ -53,6 +57,7 @@ async def check_health():
 
 
 
+<<<<<<< HEAD
 # post bot response
 @app.post("/post-audio")
 async def post_audio(file: UploadFile=File(...)):
@@ -64,6 +69,14 @@ async def post_audio(file: UploadFile=File(...)):
     # with open(file.filename, "wb") as buffer:
     #     buffer.write(file.file.read())
     # audio_input = open(file.filename, "rb")
+=======
+# get bot response
+@app.get("/get-audio/")
+async def get_audio():
+
+    # Get saved audio 
+    audio_input = open("voice.mp3", "rb")
+>>>>>>> parent of 4a3faa8 (done)
 
     # Decode Audio 
     message_decoded = convert_audio_to_text(audio_input)
@@ -95,4 +108,4 @@ async def post_audio(file: UploadFile=File(...)):
     def iterfile():
         yield audio_output
     
-    return StreamingResponse(iterfile(), media_type="application/octet-stream")
+    return StreamingResponse(iterfile(), media_type="audio/mpeg")
